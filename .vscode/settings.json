@@ -1,0 +1,15 @@
+{
+    "sshUser": "pi",
+    "sshEndpoint": "raspberrypi.local",
+    "remotePath": "/home/pi/smart-dollhouse",
+    "rsyncDestinationPath": "/home/pi",
+    "python.analysis.extraPaths": [
+        "~/.pyenv/versions/3.9.7/lib/python3.9/site-packages"
+    ],
+    "sync-rsync.sites": [
+        {
+            "remotePath": "pi@raspberrypi.local:/home/pi/smart-dollhouse/"
+        },
+    ],
+    "sync-rsync.onSave":true
+ }
