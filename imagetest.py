@@ -12,9 +12,19 @@ surfaceSize = (320, 240)
 
 pygame.init()
 
-lcd = pygame.display.set_mode((320, 240))
+lcd = pygame.display.set_mode(surfaceSize)
 pygame.mouse.set_visible(False)
 lcd.fill((0,0,0))
+
+upImg = pygame.image.load('img/up.png')
+lcd.blit(upImg, (25, (surfaceSize[1] / 2) - 50))
+
+downImg = pygame.image.load('img/down.png')
+lcd.blit(downImg, (surfaceSize[0] - 125, (surfaceSize[1] / 2) - 50))
+
+def up(x,y):
+    lcd.blit(upImg, (x,y))
+
 pygame.display.update()
 # Used to map touch event from the screen hardware to the pygame surface pixels.
 # (Those values have been found empirically, but I'm working on a simple interactive calibration tool
