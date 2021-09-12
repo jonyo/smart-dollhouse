@@ -6,18 +6,29 @@ import digitalio
 import pwmio
 from adafruit_motor import stepper
 
-DELAY = 0.001
+DELAY = 0.003
 STEPS = 200
-MICRO = 16
+MICRO = None
 STYLE = stepper.SINGLE
 
-# From the top: black green red blue
-coils = (
-    pwmio.PWMOut(board.D19), # A1
-    pwmio.PWMOut(board.D26), # A2
-    pwmio.PWMOut(board.D20), # B1
-    pwmio.PWMOut(board.D21), # B2
-)
+if MICRO == None:
+    # From the top: black green red blue
+    coils = (
+        digitalio.DigitalInOut(board.D19), # A1
+        digitalio.DigitalInOut(board.D26), # A2
+        digitalio.DigitalInOut(board.D20), # B1
+        digitalio.DigitalInOut(board.D21), # B2
+    )
+else:
+    # From the top: black green red blue
+    coils = (
+        pwmio.PWMOut(board.D19), # A1
+        pwmio.PWMOut(board.D26), # A2
+        pwmio.PWMOut(board.D20), # B1
+        pwmio.PWMOut(board.D21), # B2
+    )
+
+
 
 for coil in coils:
     coil.direction = digitalio.Direction.OUTPUT
@@ -30,3 +41,6 @@ BACKWARD = stepper.BACKWARD
 def onestep(direction):
     motor.onestep(style=STYLE, direction=direction)
     time.sleep(DELAY)
+
+def release():
+    motor.release()
