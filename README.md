@@ -1,7 +1,8 @@
 # smart-dollhouse
 Software running on pi zero for smart dollhouse.
 
-This is a work in progress.
+This is a work in progress.  Also I am using it to learn python, so this is probably not a good example of python
+best practices.
 
 ## Plans
 
