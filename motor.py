@@ -7,8 +7,8 @@ import pwmio
 from adafruit_motor import stepper
 
 DELAY = 0.001
-STEPS = 800
-MICRO = 4
+STEPS = 400
+MICRO = 8
 STYLE = stepper.SINGLE
 
 # From the top: black green red blue
