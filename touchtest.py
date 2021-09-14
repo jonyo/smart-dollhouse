@@ -12,7 +12,7 @@ surfaceSize = (320, 240)
 
 pygame.init()
 
-lcd = pygame.display.set_mode((320, 240))
+lcd = pygame.display.set_mode(surfaceSize)
 pygame.mouse.set_visible(False)
 lcd.fill((0,0,0))
 pygame.display.update()
