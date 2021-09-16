@@ -10,17 +10,26 @@ class Elevator (object):
     # current pos in whole steps... start off at 0
     pos = 0
 
+    # Travel note:
+    # measured:
+    # 1000 steps = 300mm
+    # so
+    #
+    # 1 step = .3mm
+    # 1mm = 1.3333333333333 steps
+
+    """ Steps for each floor starting with floor 0 """
     floors = [
         # first floor, yes these are 0 indexed.  as it should be... Internally anyways, externally refer to 1,2,3
         0,
         # second floor
-        100,
+        1410,
         # third floor
-        200
+        2825
     ]
 
-    # max (top floor) in whole steps
-    max = 200
+    """ max (top floor) in whole steps """
+    max = 2825
 
     def _go(self, direction, steps = 1) -> None:
         """ Go up/down # steps, but if endstop is pressed, bounce off the endstop and stop """
@@ -30,11 +39,11 @@ class Elevator (object):
         while travel < steps:
             if self.endstop.isPressed():
                 print("Reached the endstop, stopping!")
-                if direction == motor.DOWN:
+                if direction == motor.DOWN or travel == 0:
                     self._endstopBounce(motor.UP)
                     self.pos = 0
                 else:
-                    self._endstopBounce(motor.DOWN)
+                    print("Unexpected: hit the endstop going up!")
                     self.pos = self.max
                 return
 
@@ -45,7 +54,7 @@ class Elevator (object):
 
     def _endstopBounce(self, direction):
         # go the other direction until no longer sitting on endstop
-        max = 5
+        max = 10
         travel = 0
         # delay - go slower by x2 when bouncing off an endstop
         delay = motor.DELAY * 2.0
@@ -65,24 +74,19 @@ class Elevator (object):
     def goToFloor(self, floor: int):
         """ Go to the given floor, 1 2 or 3 """
         assert floor < 4 and floor > 0
-        if floor == 1:
+        if floor == 1 and False:
             # just go till it gets to endstop
             self._go(motor.DOWN, self.max)
             return
-        if floor == 3:
-            # go up till we hit endstop
-            self._go(motor.UP, self.max)
-            return
-        # middle floor... figure out steps to go
 
-        goToPos = self.floors[floor - 1]
+        floorIndex = floor - 1
+        # figure out number of steps to go
+        goToPos = self.floors[floorIndex]
         if goToPos == self.pos:
             # we're there already!  ding ding!
+            print("Already at floor %s"%floor)
             return
 
-        if goToPos > self.pos:
-            # going down!
-            self._go(motor.DOWN, goToPos - self.pos)
-        else:
-            # going up!
-            self._go(motor.UP, self.pos - goToPos)
+        direction = motor.UP if goToPos > self.pos else motor.DOWN
+        travel = abs(self.pos - goToPos)
+        self._go(direction, travel)
