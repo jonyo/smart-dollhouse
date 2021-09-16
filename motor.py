@@ -36,20 +36,20 @@ class Motor(object):
     def __del__(self):
         self.motor.release()
 
-FORWARD = stepper.FORWARD
-BACKWARD = stepper.BACKWARD
+UP = stepper.FORWARD
+DOWN = stepper.BACKWARD
 
 _motor = Motor()
 
 def onestep(direction):
     _motor.motor.onestep(style=STYLE, direction=direction)
-    time.sleep(DELAY)
 
 def manySteps(direction, steps):
     count = 0
     while count < steps:
         onestep(direction)
         count += 1
+        time.sleep(DELAY)
 
 def release():
     _motor.motor.release()
