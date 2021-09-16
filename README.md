@@ -34,7 +34,7 @@ Raspberry pi zero's GPIO pin usage for this project (so far)
 | 2 | I2C1 SDA | 3 | - |
 | 3 | I2C1 SCL | 5 | - |
 | 4 | GPCLK0 | 7 | - |
-| 5 | - | 29 | - |
+| 5 | - | 29 | Elevator Endstop |
 | 6 | - | 31 | - |
 | 7 | SPI0 CE1 | 26 | - |
 | 8 | SPI0 CE0 | 24 | - |

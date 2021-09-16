@@ -139,9 +139,9 @@ class App(object):
         self._steps += 1
 
         if self._up:
-            motor.manySteps(motor.FORWARD, 50)
+            motor.manySteps(motor.UP, 50)
         elif self._down:
-            motor.manySteps(motor.BACKWARD, 50)
+            motor.manySteps(motor.DOWN, 50)
 
     def tick(self):
         touch.tick()
