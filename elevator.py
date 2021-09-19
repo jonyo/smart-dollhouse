@@ -50,7 +50,7 @@ class Elevator (object):
             motor.onestep(direction)
             self.pos += stepDelta
             travel += 1
-            time.sleep(motor.DELAY)
+            time.sleep(motor.currentSpeed.delay)
 
     def _endstopBounce(self, direction):
         # go the other direction until no longer sitting on endstop

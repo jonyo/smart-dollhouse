@@ -8,7 +8,7 @@
     ],
     "sync-rsync.sites": [
         {
-            "remotePath": "pi@raspberrypi.local:/home/pi/smart-dollhouse/"
+            "remotePath": "pi@lorelai.local:/home/pi/smart-dollhouse/"
         },
     ],
     "sync-rsync.onSave":true

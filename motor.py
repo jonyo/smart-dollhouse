@@ -6,10 +6,18 @@ import digitalio
 import pwmio
 from adafruit_motor import stepper
 
-DELAY = 0.003
 STEPS = 200
 MICRO = None
-STYLE = stepper.SINGLE
+
+class Speed(object):
+    def __init__(self, delay, style) -> None:
+        self.delay = delay
+        self.style = style
+
+fast = Speed(0.003, stepper.SINGLE)
+slow = Speed(.004, stepper.DOUBLE)
+
+currentSpeed = fast
 
 class Motor(object):
     def __init__(self) -> None:
@@ -42,14 +50,14 @@ DOWN = stepper.BACKWARD
 _motor = Motor()
 
 def onestep(direction):
-    _motor.motor.onestep(style=STYLE, direction=direction)
+    _motor.motor.onestep(style=currentSpeed.style, direction=direction)
 
 def manySteps(direction, steps):
     count = 0
     while count < steps:
         onestep(direction)
         count += 1
-        time.sleep(DELAY)
+        time.sleep(currentSpeed.delay)
 
 def release():
     _motor.motor.release()

@@ -4,7 +4,7 @@ import time
 
 lift = elevator.Elevator()
 
-floors = [3,2,1,2,1]
+floors = [3]
 print("I hope you remembered: start out at bottom!!!")
 print("You have 5 seconds to stop it if not!")
 time.sleep(5)
