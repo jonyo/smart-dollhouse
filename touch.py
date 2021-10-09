@@ -37,23 +37,30 @@ class TouchAxis(object):
         return float(value) / float(self.delta)
 
 class TouchHandler(object):
-    # surface resolution
+    """ LCD pixel screen size (resolution) to translate touch coordinates onto """
     surfaceSize = (320, 240)
-    # touch axis details, for 320x240 2.8" TFT touchscreen, would need adjusting for different sizes
-    # Based on axis as reported by evdev (which is swapped.. we correct for by setting swapAxis further down)
+
+    """ TouchAxis details for x axis, callibrated for the 2.8" PiTFT Plus, would need adjustment for another device. """
     xTouch = TouchAxis(min=180, max=3750, invert=False)
+
+    """ TouchAxis details for x axis, callibrated for the 2.8" PiTFT Plus, would need adjustment for another device. """
     yTouch = TouchAxis(min=150, max=3750, invert=True)
 
-    # latest x/y values reported by touch events
+    """ Latest x value reported by evdev events """
     x_val = None
+
+    """ Latest y value reported by evdev events """
     y_val = None
 
     # going from evdev x/y values to touchscreen, is x and y swapped?  Normally yes but maybe you want different
     # orientation, if so set to False
+    """ Going from evdev reported x/y values for touchscreen, to the coords on the display, are the axis swapped?"""
     swapAxis = True
 
-    # simplify event handling, no need to use categorize() just to have fancy way to tell if button is down or up...
+    """ for touch event, code for touch end / key up """
     KEY_UP = 0
+
+    """ for touch event, code for touch start / key down """
     KEY_DOWN = 1
 
     def _screenCoords(self):
@@ -71,6 +78,7 @@ class TouchHandler(object):
         )
 
     def handleEvent(self, event: evdev.events.InputEvent or None) -> None:
+        """ Handle an InputEvent from evdev """
         if event == None:
             return
 

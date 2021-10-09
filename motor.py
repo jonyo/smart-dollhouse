@@ -1,4 +1,4 @@
-# Simple stepper motor test script
+# Simple stepper motor control
 
 import time
 import board

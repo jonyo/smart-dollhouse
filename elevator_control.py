@@ -1,3 +1,4 @@
+import elevator
 import motor
 import os
 import pygame
@@ -8,6 +9,8 @@ os.putenv('SDL_FBDEV', '/dev/fb1')
 os.putenv('SDL_VIDEODRIVER', 'fbcon')
 os.putenv('SDL_AUDIODRIVER', 'dummy')
 
+PINK = (255,105,180)
+
 # Let touch init pygame
 touch.beforePygameInit()
 pygame.init()
@@ -17,6 +20,16 @@ surfaceSize = (320, 240)
 lcd = pygame.display.set_mode(surfaceSize)
 pygame.mouse.set_visible(False)
 lcd.fill((0,0,0))
+
+def drawButton():
+    # todo: draw a button
+    pygame.draw.circle(lcd, PINK, (100,100), 50)
+
+drawButton()
+pygame.display.update()
+
+time.sleep(10)
+exit(0)
 
 upImg = pygame.image.load('img/up.png').convert()
 upActiveImg = pygame.image.load('img/up_active.png').convert()
