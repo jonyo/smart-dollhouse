@@ -25,11 +25,14 @@ def drawButton():
     # todo: draw a button
     pygame.draw.circle(lcd, PINK, (100,100), 50)
 
-drawButton()
-pygame.display.update()
 
-time.sleep(10)
-exit(0)
+# Elevator - test - draw buttons to give control to say which floor to go to
+# drawButton()
+# pygame.display.update()
+
+
+# time.sleep(10)
+# exit(0)
 
 upImg = pygame.image.load('img/up.png').convert()
 upActiveImg = pygame.image.load('img/up_active.png').convert()
