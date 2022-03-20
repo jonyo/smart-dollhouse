@@ -44,8 +44,8 @@ class Motor(object):
     def __del__(self):
         self.motor.release()
 
-UP = stepper.FORWARD
-DOWN = stepper.BACKWARD
+UP = stepper.BACKWARD
+DOWN = stepper.FORWARD
 
 _motor = Motor()
 
