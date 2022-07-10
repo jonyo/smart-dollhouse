@@ -20,9 +20,9 @@ best practices.
 
 * Raspberry Pi Zero W (running raspbian lite)
 * Lulzbot stepper motor I happened to already have.
-* DRV8833 driver for the stepper motor on adafruit breakout board.
+* A4988 stepper driver for the stepper motor.
 * PiTFT Plus Assembled 320x240 2.8" TFT + Resistive Touchscreen
-* 10V 1.2a power supply (from my "random power bricks I don't know what they go to anymore so better keep them
+* 12V 1.2a power supply (from my "random power bricks I don't know what they go to anymore so better keep them
    just in case" box)
 
 ## GPIO Pin Use
@@ -42,21 +42,64 @@ Raspberry pi zero's GPIO pin usage for this project (so far)
 | 10 | SPI0 MOSI | 19 | - |
 | 11 | SPI0 SCLK | 23 | - |
 | 12 | PWM0 | 32 | - |
-| 13 | PWM1 | 33 | - |
+| 13 | PWM1 | 33 | A4988 DIR pin |
 | 14 | UART0 TXD | 8 | Future: debug console? |
 | 15 | UART0 RXD | 10 | Future: debug console? |
 | 16 | - | 36 | - |
 | 17 | - | 11 | LCD Button 1 (top) |
 | 18 | PCM CLK | 12 | - |
-| 19 | PCM FS | 35 | Elevator Stepper Motor (A1) |
-| 20 | PCM DIN | 38 | Elevator Stepper Motor (B1) |
-| 21 | PCM DOUT | 40 | Elevator Stepper Motor (B2) |
+| 19 | PCM FS | 35 | A4988 STEP pin |
+| 20 | PCM DIN | 38 | - |
+| 21 | PCM DOUT | 40 | - |
 | 22 | - | 15 | LCD Button 2 |
 | 23 | - | 16 | LCD Button 3 |
 | 24 | - | 18 | LCD |
 | 25 | - | 22 | LCD |
-| 26 | - | 37 | Elevator Stepper Motor (A2) |
+| 26 | - | 37 | A4988 EN pin |
 | 27 | - | 13 | LCD Button 4 (bottom) |
+
+## A4988 / Pi / Stepper Wiring Map
+
+In the order of pins on the A4988.  Skipped pins are not connected to anything.
+
+### Left side
+
+| A4988   | Pi       |
+|---------|----------|
+| ENABLE  | GPIO D26 |
+| STEP    | GPIO D19 |
+| DIR     | GPIO D13 |
+
+If Pi GPIO usage is different than above, the mapping in the code in `motor.py` will need to be updated to match.
+### Right side
+
+| A4988   | Pi   | Stepper Wire Color | Stepper Extension Wire Color | Connector Wire Color |
+|---------|------|--------------------|------------------------------|----------------------|
+| 2B      | -    | Blue               | Blue                         | white                |
+| 2A      | -    | Red                | Red                          | yellow               |
+| 1A      | -    | Black              | Yellow                       | black                |
+| 1B      | -    | Green              | Green                        | red                  |
+| VDD     | 3.3v | -                  | -                            | -                    |
+| GND     | GND  | -                  | -                            | -                    |
+
+## A4988 Output Adjustment
+
+The A4988 requires the pot (potentiometer) on the top to be adjusted.  See the whitesheet for details.
+
+The specs on the stepper motor call for 1.5A.  The driver states it can go up to 2A but may require cooling above 1.2.
+
+From the specs / datasheet:
+
+VREF=8*IMAX*.068
+
+So for goal of 1.4A (which seems to work well when using microsteps):
+
+8*1.4*.068=0.7616
+
+So the pot should be adjusted so that the VREF is 0.7616.
+
+Reminder that it is a function of the input voltage among other things, so needs to be re-adjusted if a different power supply used.
+
 
 # Onboarding
 
