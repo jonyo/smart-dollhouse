@@ -25,11 +25,11 @@ class Elevator (object):
         # second floor
         1410,
         # third floor
-        2825
+        2815
     ]
 
     """ max (top floor) in whole steps """
-    max = 2825
+    max = 2815
 
     def _go(self, direction, steps = 1) -> None:
         """ Go up/down # steps, but if endstop is pressed, bounce off the endstop and stop """
@@ -81,7 +81,8 @@ class Elevator (object):
 
         floorIndex = floor - 1
         # figure out number of steps to go
-        goToPos = self.floors[floorIndex]
+        goToPos = self.floors[floorIndex] * motor.currentSpeed.stepMode
+
         if goToPos == self.pos:
             # we're there already!  ding ding!
             print("Already at floor %s"%floor)
@@ -90,3 +91,7 @@ class Elevator (object):
         direction = motor.UP if goToPos > self.pos else motor.DOWN
         travel = abs(self.pos - goToPos)
         self._go(direction, travel)
+
+    def brake(self):
+        """ Break at the current floor """
+        motor.release()
