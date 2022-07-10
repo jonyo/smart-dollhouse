@@ -90,13 +90,16 @@ The specs on the stepper motor call for 1.5A.  The driver states it can go up to
 
 From the specs / datasheet:
 
-VREF=8*IMAX*.068
+```
+VREF = 8 * IMAX * .068
+```
 
 So for goal of 1.4A (which seems to work well when using microsteps):
 
-8*1.4*.068=0.7616
-
-So the pot should be adjusted so that the VREF is 0.7616.
+```
+8 * 1.4 * .068 = 0.7616
+```
+So the pot should be adjusted so that the VREF is `0.7616`.
 
 Reminder that it is a function of the input voltage among other things, so needs to be re-adjusted if a different power supply used.
 
