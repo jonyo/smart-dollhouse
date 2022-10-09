@@ -15,16 +15,16 @@ class Elevator (object):
     # so
     #
     # 1 step = .3mm
-    # 1mm = 1.3333333333333 steps
+    # 1mm = 3.3333333333333 steps
 
     """ Steps for each floor starting with floor 0 """
     floors = [
         # first floor, yes these are 0 indexed.  as it should be... Internally anyways, externally refer to 1,2,3
         0,
         # second floor
-        1410,
+        1376,
         # third floor
-        2815
+        2615
     ]
 
     """ max (top floor) in whole steps """
