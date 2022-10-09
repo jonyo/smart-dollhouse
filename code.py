@@ -21,9 +21,10 @@ while True:
         print("x %s y %s z %s" % p)
         floor = menu.elevator_floors.whichFloor(p[0], p[1])
         if (floor > 0):
-            print("going to floor %s" % floor)
+            print("going to floor %s..." % floor)
             menu.elevator_floors.drawCurrentFloor(floor)
             lift.goToFloor(floor)
+
             if (floor == 1):
                 lift.release()
 

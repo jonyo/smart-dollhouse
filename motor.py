@@ -31,7 +31,7 @@ class Speed(object):
 
 # Experiments - Will need to be re-done if changing power supply or adjusting output POT on the A4988
 
-# FULL 0.00100 -
+# FULL 0.00100 - PERFECTO! no need to experiment more!
 
 
 currentSpeed = Speed(.001, FULL_STEP)
