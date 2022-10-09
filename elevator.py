@@ -91,7 +91,7 @@ class Elevator (object):
             self.release()
 
     def isBraked(self) -> bool:
-        return not motor.isEngaged()
+        return motor.isEngaged()
 
     def release(self):
         """ Release the motor """
