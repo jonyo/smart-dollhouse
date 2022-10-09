@@ -5,7 +5,7 @@ import board
 import time
 
 class Elevator (object):
-    endstop = iobuttons.Button(board.D5)
+    endstop = None # iobuttons.Button(board.D5)
 
     # current pos in whole steps... start off at 0
     pos = 0
@@ -37,7 +37,7 @@ class Elevator (object):
         travel = 0
         stepDelta = -1 if direction == motor.DOWN else 1
         while travel < steps:
-            if self.endstop.isPressed():
+            if self.endstop != None and self.endstop.isPressed():
                 print("Reached the endstop, stopping!")
                 if direction == motor.DOWN or travel == 0:
                     self._endstopBounce(motor.UP)
