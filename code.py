@@ -1,39 +1,35 @@
 import menu.elevator_floors
 import touchscreen
-import adafruit_display_shapes.circle as circle
-from time import sleep
+from time import sleep, time
 import elevator
 
 print("Initializing elevator...")
 lift = elevator.Elevator()
 
-print("waiting 2 seconds...")
-sleep(2)
-print("going to floor 2")
-# lift.goToFloor(2)
-
+print("Drawing menu...")
 menu.elevator_floors.drawMenu()
 
 print("Done showing")
+
+timeout = 0
 
 while True:
     sleep(.1)
     p = touchscreen.ts.touch_point
     if p:
         print("x %s y %s z %s" % p)
-        # put a dot here
-        dot = circle.Circle(
-            x0=p[0],
-            y0=p[1],
-            r=5,
-            fill=0xAA0088,
-            outline=0xFFFF00
-        )
-        print("made a dot")
-        splash.append(dot)
-        print("going to floor 2")
-        lift.goToFloor(2)
-        print("keeping at floor for 3 seconds...")
-        sleep(3)
-        print("exiting!")
-        break
+        floor = menu.elevator_floors.whichFloor(p[0], p[1])
+        if (floor > 0):
+            print("going to floor %s" % floor)
+            lift.goToFloor(floor)
+            if (floor == 1):
+                lift.release()
+
+        if (lift.isBraked()):
+            timeout = time() + 60*5  # 5 minutes from now
+        else:
+            timeout = 0
+
+    if (timeout > 0 and time() > timeout):
+        # go to floor 1 to save energy on motor brake
+        lift.goToFloor(1)

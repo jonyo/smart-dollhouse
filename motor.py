@@ -23,6 +23,7 @@ EIGHTH_STEP = 8
 """1/16 microstep, pins expected to be wired: MS1 = high, MS2 = high, MS3 = high"""
 SIXTEENTH_STEP = 16
 
+
 class Speed(object):
     def __init__(self, delay, style) -> None:
         self.delay = delay
@@ -32,7 +33,9 @@ class Speed(object):
 
 # FULL 0.00100 -
 
+
 currentSpeed = Speed(.001, FULL_STEP)
+
 
 class Motor(object):
     def __init__(self) -> None:
@@ -56,12 +59,14 @@ DOWN = True
 
 _motor = Motor()
 
+
 def onestep(direction):
     _motor.enablePin.value = ENABLED
     _motor.dirPin.value = direction
     _motor.stepPin.value = True
     time.sleep(currentSpeed.delay)
     _motor.stepPin.value = False
+
 
 def manySteps(direction, steps):
     count = 0
@@ -70,8 +75,14 @@ def manySteps(direction, steps):
         count += 1
         time.sleep(currentSpeed.delay)
 
+
 def engage():
     _motor.enablePin.value = ENABLED
 
+
 def release():
     _motor.enablePin.value = DISABLED
+
+
+def isEngaged() -> bool:
+    return _motor.enablePin.value == ENABLED

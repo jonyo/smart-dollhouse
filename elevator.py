@@ -1,11 +1,10 @@
 """ Combines different elements to control the elevator """
 import motor
-import iobuttons
-import board
 import time
 
+
 class Elevator (object):
-    endstop = None # iobuttons.Button(board.D5)
+    endstop = None  # iobuttons.Button(board.D5)
 
     # current pos in whole steps... start off at 0
     pos = 0
@@ -31,7 +30,7 @@ class Elevator (object):
     """ max (top floor) in whole steps """
     max = 2815
 
-    def _go(self, direction, steps = 1) -> None:
+    def _go(self, direction, steps=1) -> None:
         """ Go up/down # steps, but if endstop is pressed, bounce off the endstop and stop """
         assert steps > 0
         travel = 0
@@ -64,19 +63,15 @@ class Elevator (object):
             motor.onestep(direction)
             travel += 1
             time.sleep(delay)
-        print("Tried bouncing off the endstop but did not get off after %s steps"%max)
-
-    def _firstFloor(self):
-        """ Go to the first floor """
-        # unlike others, keep going down until we hit endstop, use as a homing action
-        self._go(motor.DOWN, self.max)
+        print("Tried bouncing off the endstop but did not get off after %s steps" % max)
 
     def goToFloor(self, floor: int):
         """ Go to the given floor, 1 2 or 3 """
         assert floor < 4 and floor > 0
-        if floor == 1 and False:
+        if floor == 1 and self.endstop != None:
             # just go till it gets to endstop
             self._go(motor.DOWN, self.max)
+            self.release()
             return
 
         floorIndex = floor - 1
@@ -85,13 +80,19 @@ class Elevator (object):
 
         if goToPos == self.pos:
             # we're there already!  ding ding!
-            print("Already at floor %s"%floor)
+            print("Already at floor %s" % floor)
             return
 
         direction = motor.UP if goToPos > self.pos else motor.DOWN
         travel = abs(self.pos - goToPos)
         self._go(direction, travel)
+        if (floor == 1):
+            # release the motor for level 1
+            self.release()
 
-    def brake(self):
-        """ Break at the current floor """
+    def isBraked(self) -> bool:
+        return not motor.isEngaged()
+
+    def release(self):
+        """ Release the motor """
         motor.release()

@@ -18,16 +18,16 @@
                 ".DS_Store"
             ]
         },
-        {
-            "name": "pi4",
-            "remotePath": "lorelai@raspberrypi.local:/home/lorelai/smart-dollhouse/",
-            "exclude": [
-                ".git",
-                ".vscode",
-                ".DS_Store",
-                "adafruit_hx8357.py"
-            ]
-        },
+        // {
+        //     "name": "pi4",
+        //     "remotePath": "lorelai@raspberrypi.local:/home/lorelai/smart-dollhouse/",
+        //     "exclude": [
+        //         ".git",
+        //         ".vscode",
+        //         ".DS_Store",
+        //         "adafruit_hx8357.py"
+        //     ]
+        // },
 
     ],
 
