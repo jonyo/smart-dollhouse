@@ -1,5 +1,4 @@
 import elevator
-import iobuttons
 import time
 
 lift = elevator.Elevator()

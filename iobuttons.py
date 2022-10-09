@@ -12,8 +12,8 @@ class Button:
         return self.button.value == False
 
 buttons = [
-    Button(board.D17),
-    Button(board.D22),
-    Button(board.D23),
-    Button(board.D27),
+    # Button(board.D17),
+    # Button(board.D22),
+    # Button(board.D23),
+    # Button(board.D27),
 ]
