@@ -1,7 +1,9 @@
 import menu.elevator_floors
 import touchscreen
-from time import sleep, time
+from time import monotonic, sleep
 import elevator
+
+TIMEOUT_MINUTES = 5
 
 print("Initializing elevator...")
 lift = elevator.Elevator()
@@ -12,7 +14,14 @@ menu.elevator_floors.drawCurrentFloor(1)
 
 print("Starting run loop...")
 
-timeout = 0
+timeoutAfter = 0
+
+
+def goToFloor(floor: int) -> None:
+    print("going to floor %s..." % floor)
+    menu.elevator_floors.drawCurrentFloor(floor)
+    lift.goToFloor(floor)
+
 
 while True:
     sleep(.1)
@@ -21,18 +30,17 @@ while True:
         print("x %s y %s z %s" % p)
         floor = menu.elevator_floors.whichFloor(p[0], p[1])
         if (floor > 0):
-            print("going to floor %s..." % floor)
-            menu.elevator_floors.drawCurrentFloor(floor)
-            lift.goToFloor(floor)
-
-            if (floor == 1):
-                lift.release()
+            goToFloor(floor)
 
         if (lift.isBraked()):
-            timeout = time() + 60*5  # 5 minutes from now
+            # Update timeout to be 5 min after last touch (even if not touched on button)
+            timeoutAfter = monotonic() + (60*TIMEOUT_MINUTES)
         else:
-            timeout = 0
+            timeoutAfter = 0
 
-    if (timeout > 0 and time() > timeout):
+    if (timeoutAfter > 0 and monotonic() > timeoutAfter):
         # go to floor 1 to save energy on motor brake
-        lift.goToFloor(1)
+        print("Timeout reached of %s minutes, going to floor 1" %
+              TIMEOUT_MINUTES)
+        goToFloor(1)
+        timeoutAfter = 0
