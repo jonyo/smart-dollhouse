@@ -8,8 +8,9 @@ lift = elevator.Elevator()
 
 print("Drawing menu...")
 menu.elevator_floors.drawMenu()
+menu.elevator_floors.drawCurrentFloor(1)
 
-print("Done showing")
+print("Starting run loop...")
 
 timeout = 0
 
@@ -21,6 +22,7 @@ while True:
         floor = menu.elevator_floors.whichFloor(p[0], p[1])
         if (floor > 0):
             print("going to floor %s" % floor)
+            menu.elevator_floors.drawCurrentFloor(floor)
             lift.goToFloor(floor)
             if (floor == 1):
                 lift.release()

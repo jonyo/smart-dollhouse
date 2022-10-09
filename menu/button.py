@@ -16,8 +16,10 @@ class Button:
         self.height = height
         self.color = color
         self.label = label
+        self.drawn = False
 
     def drawOutline(self) -> RoundRect:
+        self.drawn = True
         return RoundRect(
             x=self.x1,
             y=self.y1,
@@ -42,3 +44,7 @@ class Button:
 
     def isInBounds(self, x: int, y: int):
         return x >= self.x1 and x <= self.x2 and y >= self.y1 and y <= self.y2
+
+    def moveToY(self, lineToButton: Button):
+        self.y1 = lineToButton.y1
+        self.y2 = self.y1 + self.height
